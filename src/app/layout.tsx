@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 // import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {Providers} from "@/app/Providers";
+import Link from "next/link";
 
 // const geistSans = Geist({
 //     variable: "--font-geist-sans",
@@ -25,7 +26,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body className={` antialiased bg-white px-4`}>
+        <body className={` antialiased bg-white mx-auto max-w-6xl flex flex-col gap-6 p-2 xl:p-0`}>
+        <header className={'flex justify-between p-6 shadow-2xl'}>
+            <h1> Money Mind </h1>
+            <div>
+                <Link href={'/'}> Features </Link>
+            </div>
+        </header>
         <Providers>
             {children}
         </Providers>
