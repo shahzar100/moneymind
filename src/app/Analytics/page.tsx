@@ -7,7 +7,6 @@ import VendorSpending from "@/Components/VendorSpending";
 export default async function Page() {
     return (
         <>
-            <h1 className="text-2xl font-bold mb-8 text-center col-span-6">Money Tracker Dashboard</h1>
             <TotalSpent/>
             <ChartComponent/>
             <Subscriptions/>
