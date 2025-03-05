@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import Link from "next/link";
 import { Transaction, useDataContext } from "../../../backend/context/DataContext";
+import { usePathname } from "next/navigation";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -26,6 +27,7 @@ const getOptions = (selectedDays: number) => ({
 });
 
 export const ChartComponent: React.FC = () => {
+    const pathname = usePathname();
     const { transactions, selectedDays, setSelectedCategory, selectedCategory } = useDataContext();
     const chartRef = useRef<ChartJS<"bar", number[], string>>(null);
 
@@ -122,8 +124,8 @@ export const ChartComponent: React.FC = () => {
     };
 
     return (
-        <div className="h-full bg-gray-100 col-span-4 p-4 rounded-md">
-            <Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>
+        <div className="bg-gray-100 col-span-4 p-4 rounded-md">
+            {pathname !== '/Analytics/Spending'&&<Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>}
             <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick} />
         </div>
     );

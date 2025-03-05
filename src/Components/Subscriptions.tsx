@@ -59,7 +59,7 @@ export const Subscriptions: React.FC = () => {
     const pastSubscriptions = bundlesArray.filter(bundle => !isCurrentSubscription(bundle.lastDate));
 
     return (
-        <div className="overflow-y-auto shadow-2xl p-4 col-span-2 h-1/2 bg-gray-100">
+        <div className="overflow-y-auto shadow-2xl p-4 col-span-2 max-h-[70vh] bg-gray-100">
             <h2 className="text-xl font-bold mb-4">Recurring Subscriptions</h2>
             <div className="flex flex-col gap-8">
                 {/* Current Subscriptions Section */}
