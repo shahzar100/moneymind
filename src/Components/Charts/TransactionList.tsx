@@ -5,7 +5,7 @@ import {parseDateFromCSV} from "../../../backend/utils/date";
 import {FaX} from "react-icons/fa6";
 
 export const TransactionList: React.FC = () => {
-    const {transactions, selectedCategory, setSelectedCategory} = useDataContext();
+    const {transactions, selectedCategory, setSelectedCategory,selectedDays} = useDataContext();
 
     const filteredTransactions = useMemo(() => {
         // Filter out transactions missing a date and ignore income/transfers.
@@ -25,14 +25,22 @@ export const TransactionList: React.FC = () => {
         });
     }, [transactions, selectedCategory]);
 
+    const totalForCategory = useMemo(() => {
+        if (!selectedCategory) return 0;
+        return transactions
+            .filter((tx) => (tx.category || "").trim().toLowerCase() === selectedCategory)
+            .reduce((sum, tx) => sum + tx.amount, 0);
+    }, [transactions, selectedCategory]);
+
 
     return (
-        <div className="flex-1 overflow-y-auto max-h-[70vh] border-l pl-4">
+        <div className="overflow-y-auto h-full max-h-[150vh] border-l p-4 col-span-2 bg-gray-100">
             <div className="flex items-center mb-4 gap-2">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-xl font-semibold flex gap-2">
                     {selectedCategory
-                        ? `Transactions for "${selectedCategory}"`
-                        : "Transactions"}
+                        ? `Transactions for "${selectedCategory}" -`
+                        : `Transactions - ( Last ${selectedDays} days )`}
+                    {selectedCategory && <span className={'text-red-500'}>£{totalForCategory.toFixed(2)}</span>}
                 </h2>
                 {selectedCategory && (
                     <button

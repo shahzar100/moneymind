@@ -12,20 +12,21 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
+import Link from 'next/link'
 import {Transaction, useDataContext} from "../../../backend/context/DataContext";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const options = {
+const getOptions = (selectedDays: number) => ({
     responsive: true,
     plugins: {
-        legend: {position: "top" as const},
-        title: {display: true, text: "Expenses by Category"},
+        legend: { position: "top" as const },
+        title: { display: true, text: `Expenses by Category - Last ( ${selectedDays} days )` },
     },
-};
+});
 
 export const ChartComponent: React.FC = () => {
-    const {transactions, setSelectedCategory} = useDataContext();
+    const {transactions, setSelectedCategory,selectedDays} = useDataContext();
     const chartRef = useRef<ChartJS<"bar", number[], string>>(null);
 
     // Compute chart data from the transactions (which are prefiltered by date).
@@ -91,8 +92,9 @@ export const ChartComponent: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex-1 w-full max-w-4xl">
-            <Bar ref={chartRef} options={options} data={computedChartData} onClick={handleClick}/>
+        <div className="h-full bg-gray-100 col-span-4 p-4 rounded-md">
+            <Link href={'/Analytics/Spending'} className={'flex justify-end'}> View Full Analytics </Link>
+            <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick}/>
         </div>
     );
 };

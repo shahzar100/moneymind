@@ -7,14 +7,12 @@ import {SpendingInsights} from "@/Components/SpendingInsights";
 
 export default async function Page() {
     return (
-        <div className="h-screen font-[family-name:var(--font-geist-sans)] ">
-            <h1 className="text-2xl font-bold mb-8 text-center">Money Tracker Dashboard</h1>
-            <DaysSelector/>
-            <TotalSpent/>
-            <div className="flex flex-col xl:flex-row h-full">
+        <div className={' grid grid-cols-6 bg-gray-200 p-4 gap-4 rounded-xl'}>
+            <h1 className="text-2xl font-bold mb-8 text-center col-span-6">Money Tracker Dashboard</h1>
+                <DaysSelector/>
+                <TotalSpent/>
                 <ChartComponent/>
                 <TransactionList/>
-            </div>
             <SpendingInsights/>
         </div>
     );

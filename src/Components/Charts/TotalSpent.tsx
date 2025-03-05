@@ -47,7 +47,7 @@ export const TotalSpent: React.FC = () => {
     }, [filteredTransactions]);
 
     return (
-        <div className="mb-4 p-4 rounded shadow">
+        <div className="mb-4 p-4 rounded shadow bg-gray-100 col-span-6">
             <h3 className="text-lg font-semibold">
                 Total Spent: <span className="text-red-500">£{total.toLocaleString()}</span> pounds
             </h3>
@@ -62,7 +62,7 @@ export const TotalSpent: React.FC = () => {
             </button>
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className=" rounded-lg p-6 w-full max-w-md relative">
+                    <div className=" rounded-lg p-6 w-full max-w-md relative bg-white">
                         <h2 className="text-xl font-bold mb-4">Category Breakdown ({selectedDays} days) </h2>
                         <ul className="max-h-60 overflow-y-auto">
                             <h3 className="text-lg font-semibold">
