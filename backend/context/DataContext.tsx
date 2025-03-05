@@ -38,7 +38,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({children}
             try {
                 const res = await fetch("/data.csv");
                 if (!res.ok) {
-                    throw new Error("Failed to fetch CSV file.");
+                    new Error("Failed to fetch CSV file.");
                 }
                 const csvText = await res.text();
                 const parsed = Papa.parse(csvText, {header: true, skipEmptyLines: true});
@@ -47,7 +47,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({children}
                     date: row.Date,  // CSV header "Date"
                     type: row.Type,  // CSV header "Type"
                     name: row.Name,  // CSV header "Name"
-                    amount: Math.abs(parseFloat(row["Local amount"])),  // CSV header "Local amount"
+                    amount: parseFloat(row["Local amount"]),  // CSV header "Local amount"
                     notes: row["Notes and #tags"] || "",
                     category: row.Category,  // CSV header "Category"
                 }));

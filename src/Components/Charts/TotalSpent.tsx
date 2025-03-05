@@ -49,7 +49,7 @@ export const TotalSpent: React.FC = () => {
     return (
         <div className="mb-4 p-4 rounded shadow bg-gray-100 col-span-6">
             <h3 className="text-lg font-semibold">
-                Total Spent: <span className="text-red-500">£{total.toLocaleString()}</span> pounds
+                Total Spent: <span className="text-red-500">£{Math.abs(total).toLocaleString()}</span> pounds
             </h3>
             <h3 className="text-lg font-semibold">
                 Total Income: <span className="text-green-500">£{totalIncome.toLocaleString()}</span> pounds

@@ -32,7 +32,7 @@ export const TransactionList: React.FC = () => {
                     {selectedCategory
                         ? `Transactions for "${selectedCategory}" `
                         : `Transactions`}
-                    <h3 className={'text-sm'}> (For Last {selectedDays} days  )</h3>
+                    <span className={'text-sm'}> (For Last {selectedDays} days  )</span>
                 </h2>
 
 
