@@ -25,23 +25,17 @@ export const TransactionList: React.FC = () => {
         });
     }, [transactions, selectedCategory]);
 
-    const totalForCategory = useMemo(() => {
-        if (!selectedCategory) return 0;
-        return transactions
-            .filter((tx) => (tx.category || "").trim().toLowerCase() === selectedCategory)
-            .reduce((sum, tx) => sum + tx.amount, 0);
-    }, [transactions, selectedCategory]);
-
-
     return (
-        <div className="overflow-y-auto h-full max-h-[150vh] border-l p-4 col-span-2 bg-gray-100">
+        <div className="overflow-y-auto max-h-[70vh] border-l p-4 col-span-2 bg-gray-100 flex flex-col gap-4 rounded-md">
             <div className="flex items-center mb-4 gap-2">
-                <h2 className="text-xl font-semibold flex gap-2">
+                <h2 className="text-xl font-semibold flex gap-2 items-center flex-wrap">
                     {selectedCategory
-                        ? `Transactions for "${selectedCategory}" -`
-                        : `Transactions - ( Last ${selectedDays} days )`}
-                    {selectedCategory && <span className={'text-red-500'}>£{totalForCategory.toFixed(2)}</span>}
+                        ? `Transactions for "${selectedCategory}" `
+                        : `Transactions`}
+                    <h3 className={'text-sm'}> (For Last {selectedDays} days  )</h3>
                 </h2>
+
+
                 {selectedCategory && (
                     <button
                         onClick={() => setSelectedCategory(null)}
@@ -51,6 +45,8 @@ export const TransactionList: React.FC = () => {
                     </button>
                 )}
             </div>
+
+
             {filteredTransactions.length > 0 ? (
                 <ul className="space-y-4">
                     {filteredTransactions.map((tx: Transaction, idx: number) => (
