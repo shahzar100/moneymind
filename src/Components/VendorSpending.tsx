@@ -1,14 +1,14 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import { useDataContext, Transaction } from "@/../backend/context/DataContext";
-import { parseDateFromCSV } from "@/../backend/utils/date";
+import React, {useMemo, useState} from "react";
+import {Transaction, useDataContext} from "@/../backend/context/DataContext";
+import {parseDateFromCSV} from "@/../backend/utils/date";
 
 interface VendorSpendingProps {
     fullView?: boolean;
 }
 
-export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true }) => {
-    const { fullTransactions, transactions,selectedDays } = useDataContext();
+export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true}) => {
+    const {fullTransactions, transactions, selectedDays} = useDataContext();
 
     // Choose dataset based on the fullView prop.
     const dataToUse = fullView ? fullTransactions : transactions;
@@ -25,7 +25,7 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true 
     const vendorSpending = useMemo(() => {
         const groups: Record<
             string,
-            { name: string; total: number; count: number; transactions: Transaction[]; category: string }
+            { name: string; total: number; count: number; transactions: Transaction[]; category: string, date: string }
         > = {};
         vendorTransactions.forEach((tx: Transaction) => {
             const vendor = (tx.name || "").trim();
@@ -36,9 +36,10 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true 
                     count: 0,
                     transactions: [],
                     category: tx.category || "",
+                    date: tx.date
                 };
             }
-            groups[vendor].total += tx.amount;
+            groups[vendor].total += tx.amount < 0 ? tx.amount : 0;
             groups[vendor].count += 1;
             groups[vendor].transactions.push(tx);
         });
@@ -49,15 +50,25 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true 
     // Modal state for selected vendor.
     const [selectedVendor, setSelectedVendor] = useState<string | null>(null);
 
-    // Filter transactions for the selected vendor.
+    function parseDate(dateStr: string) {
+        // Split the string by "/" and create a new Date object.
+        const [day, month, year] = dateStr.split('/');
+        return new Date(+year, +month - 1, +day);
+    }
+
     const selectedVendorTransactions = useMemo(() => {
         if (!selectedVendor) return [];
-        return vendorTransactions.filter((tx) => (tx.name || "").trim() === selectedVendor);
+        return [...vendorTransactions]
+            .filter((tx) => (tx.name || "").trim() === selectedVendor)
+            .sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime());
     }, [selectedVendor, vendorTransactions]);
+
 
     return (
         <div className="p-4 shadow-lg rounded-md col-span-3 xl:col-span-6 max-h-[70vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4">Vendor Spending <span className={'text-gray-800 text-sm'}>( {fullView?'Showing all transactions':`Showing Transactions for ${selectedDays} days`} )</span> </h2>
+            <h2 className="text-2xl font-bold mb-4">Vendor Spending <span
+                className={'text-gray-800 text-sm'}>( {fullView ? 'Showing all transactions' : `Showing Transactions for ${selectedDays} days`} )</span>
+            </h2>
             {vendorSpending.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {vendorSpending.map((vendor, idx) => (
@@ -96,19 +107,19 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true 
                         <h2 className="text-xl font-bold mb-4">{selectedVendor} Details</h2>
                         {selectedVendorTransactions.length > 0 ? (
                             <ul className="max-h-60 overflow-y-auto">
-                                {selectedVendorTransactions.map((tx, idx) => (
-                                    <li key={idx} className="border-b py-2">
-                                        <div className="flex justify-between">
-                      <span className="font-medium">
-                        {parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}
-                      </span>
-                                            <span className="text-red-500">£{Math.abs(tx.amount).toFixed(2)}</span>
-                                        </div>
-                                        {tx.notes && (
-                                            <div className="text-xs text-gray-600">{tx.notes}</div>
-                                        )}
-                                    </li>
-                                ))}
+                                {selectedVendorTransactions
+                                    .map((tx, idx) => (<li key={idx} className="border-b py-2">
+                                            <div className="flex justify-between">
+                                            <span className="font-medium">
+                                                {parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}
+                                            </span>
+                                                <span className="text-red-500">£{Math.abs(tx.amount).toFixed(2)}</span>
+                                            </div>
+                                            {tx.notes && (
+                                                <div className="text-xs text-gray-600">{tx.notes}</div>
+                                            )}
+                                        </li>
+                                    ))}
                             </ul>
                         ) : (
                             <p>No transactions available for this vendor.</p>
