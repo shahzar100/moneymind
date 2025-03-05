@@ -124,7 +124,7 @@ export const ChartComponent: React.FC = () => {
     };
 
     return (
-        <div className="bg-gray-100 col-span-4 p-4 rounded-md">
+        <div className="shadow-lg col-span-6 xl:col-span-4 p-4">
             {pathname !== '/Analytics/Spending'&&<Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>}
             <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick} />
         </div>

@@ -56,7 +56,7 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({ fullView = true 
     }, [selectedVendor, vendorTransactions]);
 
     return (
-        <div className="p-4 rounded shadow bg-white col-span-6 max-h-[70vh] overflow-y-auto">
+        <div className="p-4 shadow-lg rounded-md col-span-3 xl:col-span-6 max-h-[70vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Vendor Spending <span className={'text-gray-800 text-sm'}>( {fullView?'Showing all transactions':`Showing Transactions for ${selectedDays} days`} )</span> </h2>
             {vendorSpending.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

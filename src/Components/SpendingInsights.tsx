@@ -51,7 +51,7 @@ export const SpendingInsights: React.FC = () => {
     }, [transactions, selectedCategory]);
 
     return (
-        <div className="mt-4 p-4 rounded shadow col-span-6 bg-gray-100">
+        <div className="mt-4 p-4 rounded-md shadow-lg col-span-6">
             <h2 className="text-xl font-bold mb-2">Spending Insights</h2>
             {loading ? (
                 <p>Loading insights...</p>

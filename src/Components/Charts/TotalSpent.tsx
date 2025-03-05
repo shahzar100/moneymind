@@ -47,18 +47,18 @@ export const TotalSpent: React.FC = () => {
     }, [filteredTransactions]);
 
     return (
-        <div className="mb-4 p-4 rounded shadow bg-gray-100 col-span-6">
+        <div className="mb-4 p-4 rounded-md shadow-lg col-span-6 flex items-end flex-wrap justify-evenly">
             <h3 className="text-lg font-semibold">
-                Total Spent: <span className="text-red-500">£{Math.abs(total).toLocaleString()}</span> pounds
+                Spending <span className="text-red-500">£{Math.abs(total).toLocaleString()}</span> pounds
             </h3>
             <h3 className="text-lg font-semibold">
-                Total Income: <span className="text-green-500">£{totalIncome.toLocaleString()}</span> pounds
+                Income <span className="text-green-500">£{totalIncome.toLocaleString()}</span> pounds
             </h3>
             <button
                 onClick={openModal}
                 className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
             >
-                View Categories
+                Categories
             </button>
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
