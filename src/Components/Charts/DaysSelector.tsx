@@ -12,7 +12,8 @@ export const DaysSelector: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center space-x-3 col-span-6 shadow-lg rounded-md p-2">
+        <div
+            className="flex items-center space-x-3 col-span-6 rounded-lg border border-[#E0E0E0] hover:shadow-lg bg-white p-2">
             <label htmlFor="days-select" className="text-lg font-semibold text-gray-700">
                 Select Period:
             </label>

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useDataContext } from "../../backend/context/DataContext";
-import { parseDateFromCSV } from "../../backend/utils/date";
+import {useDataContext} from "../../backend/context/DataContext";
+import {parseDateFromCSV} from "../../backend/utils/date";
 
 // Helper to check if a date is in the current or previous month.
 function isCurrentSubscription(date: Date): boolean {
@@ -25,7 +25,7 @@ function isCurrentSubscription(date: Date): boolean {
 }
 
 export const Subscriptions: React.FC = () => {
-    const { fullTransactions } = useDataContext();
+    const {fullTransactions} = useDataContext();
 
     // Filter transactions that belong to subscriptions.
     const subscriptions = fullTransactions.filter(
@@ -59,7 +59,8 @@ export const Subscriptions: React.FC = () => {
     const pastSubscriptions = bundlesArray.filter(bundle => !isCurrentSubscription(bundle.lastDate));
 
     return (
-        <div className="overflow-y-auto shadow-lg p-4 col-span-3 xl:col-span-2 max-h-[70vh] rounded-md">
+        <div
+            className="overflow-y-auto border border-[#E0E0E0] hover:shadow-lg rounded-lg bg-white p-4 col-span-3 xl:col-span-2 max-h-[70vh]">
             <h2 className="text-xl font-bold mb-4">Recurring Subscriptions</h2>
             <div className="flex flex-col gap-8">
                 {/* Current Subscriptions Section */}

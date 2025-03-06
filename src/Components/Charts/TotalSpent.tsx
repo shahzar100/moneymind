@@ -47,7 +47,8 @@ export const TotalSpent: React.FC = () => {
     }, [filteredTransactions]);
 
     return (
-        <div className="mb-4 p-4 rounded-md shadow-lg col-span-6 flex items-end flex-wrap justify-evenly">
+        <div
+            className="p-4 rounded-lg border border-[#E0E0E0] hover:shadow-lg bg-white col-span-6 flex items-end flex-wrap justify-evenly">
             <h3 className="text-lg font-semibold">
                 Spending <span className="text-red-500">£{Math.abs(total).toLocaleString()}</span> pounds
             </h3>

@@ -5,14 +5,14 @@ import {parseDateFromCSV} from "../../../backend/utils/date";
 import {FaX} from "react-icons/fa6";
 
 export const TransactionList: React.FC = () => {
-    const {transactions, selectedCategory, setSelectedCategory,selectedDays} = useDataContext();
+    const {transactions, selectedCategory, setSelectedCategory, selectedDays} = useDataContext();
 
     const filteredTransactions = useMemo(() => {
         // Filter out transactions missing a date and ignore income/transfers.
         let txs = transactions.filter((tx: Transaction) => {
             const cat = (tx.category || "").trim().toLowerCase();
             // Only include transactions that have a date defined and are not income or transfers.
-            return tx.date && cat !== "income" && cat !== "transfers";
+            return tx.date && cat !== "income" && cat !== "transfers" && !tx.notes.includes("Returned");
         });
         if (selectedCategory) {
             txs = txs.filter((tx: Transaction) => (tx.category || "").trim().toLowerCase() === selectedCategory);
@@ -26,7 +26,8 @@ export const TransactionList: React.FC = () => {
     }, [transactions, selectedCategory]);
 
     return (
-        <div className="overflow-y-auto max-h-[70vh] border-l p-4 col-span-6 xl:col-span-2 shadow-lg flex flex-col gap-4 rounded-md">
+        <div
+            className="overflow-y-auto max-h-[70vh] border-l p-4 col-span-6 xl:col-span-2 hover:shadow-lg flex flex-col gap-4 rounded-lg border border-[#E0E0E0] bg-white">
             <div className="flex items-center mb-4 gap-2">
                 <h2 className="text-xl font-semibold flex gap-2 items-center flex-wrap">
                     {selectedCategory

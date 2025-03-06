@@ -17,7 +17,7 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
     const vendorTransactions = useMemo(() => {
         return dataToUse.filter((tx: Transaction) => {
             const cat = (tx.category || "").trim().toLowerCase();
-            return cat !== "subscriptions" && cat !== "income" && cat !== "transfers";
+            return cat !== "subscriptions" && cat !== "income" && cat !== "transfers" && !tx.notes.includes("Returned");
         });
     }, [dataToUse]);
 
@@ -65,7 +65,8 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
 
 
     return (
-        <div className="p-4 shadow-lg rounded-md col-span-3 xl:col-span-6 max-h-[70vh] overflow-y-auto">
+        <div
+            className="p-4 border border-[#E0E0E0] hover:shadow-lg rounded-lg bg-white col-span-3 xl:col-span-6 max-h-[70vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Vendor Spending <span
                 className={'text-gray-800 text-sm'}>( {fullView ? 'Showing all transactions' : `Showing Transactions for ${selectedDays} days`} )</span>
             </h2>

@@ -1,6 +1,6 @@
 "use client";
-import React, { useMemo, useRef } from "react";
-import { Bar } from "react-chartjs-2";
+import React, {useMemo, useRef} from "react";
+import {Bar} from "react-chartjs-2";
 import {
     ActiveElement,
     BarElement,
@@ -13,28 +13,29 @@ import {
     Tooltip,
 } from "chart.js";
 import Link from "next/link";
-import { Transaction, useDataContext } from "../../../backend/context/DataContext";
-import { usePathname } from "next/navigation";
+import {Transaction, useDataContext} from "../../../backend/context/DataContext";
+import {usePathname} from "next/navigation";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const getOptions = (selectedDays: number) => ({
     responsive: true,
     plugins: {
-        legend: { position: "top" as const },
-        title: { display: true, text: `Expenses by Category - Last (${selectedDays} days)` },
+        legend: {position: "top" as const},
+        title: {display: true, text: `Expenses by Category - Last (${selectedDays} days)`},
     },
 });
 
 export const ChartComponent: React.FC = () => {
     const pathname = usePathname();
-    const { transactions, selectedDays, setSelectedCategory, selectedCategory } = useDataContext();
+    const {transactions, selectedDays, setSelectedCategory, selectedCategory} = useDataContext();
     const chartRef = useRef<ChartJS<"bar", number[], string>>(null);
 
     // Compute chart data, conditionally adjusting colors based on the selected category.
     const computedChartData: ChartData<"bar", number[], string> = useMemo(() => {
         const expenseByCategory: Record<string, number> = {};
         transactions.forEach((tx: Transaction) => {
+            if (tx.notes.includes("Returned")) return
             // Accumulate net spending per category.
             expenseByCategory[tx.category] = (expenseByCategory[tx.category] || 0) + tx.amount;
         });
@@ -104,7 +105,7 @@ export const ChartComponent: React.FC = () => {
         const elements: ActiveElement[] = chart.getElementsAtEventForMode(
             event.nativeEvent,
             "nearest",
-            { intersect: true },
+            {intersect: true},
             true
         );
         if (elements.length > 0) {
@@ -114,19 +115,20 @@ export const ChartComponent: React.FC = () => {
                 .toLowerCase();
             console.log(clickedCategory)
 
-            if(selectedCategory === clickedCategory){
+            if (selectedCategory === clickedCategory) {
                 setSelectedCategory(null);
-            }
-            else{
+            } else {
                 setSelectedCategory(clickedCategory);
             }
         }
     };
 
     return (
-        <div className="shadow-lg col-span-6 xl:col-span-4 p-4">
-            {pathname !== '/Analytics/Spending'&&<Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>}
-            <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick} />
+        <div
+            className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 xl:col-span-4 p-4 flex-1">
+            {pathname !== '/Analytics/Spending' &&
+                <Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>}
+            <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick}/>
         </div>
     );
 };
