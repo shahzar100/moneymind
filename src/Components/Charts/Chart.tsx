@@ -12,9 +12,9 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import Link from "next/link";
 import {Transaction, useDataContext} from "../../../backend/context/DataContext";
 import {usePathname} from "next/navigation";
+import Link from "next/link";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -124,12 +124,10 @@ export const ChartComponent: React.FC = () => {
     };
 
     return (
-        <div
-            className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 xl:col-span-4 p-4 flex-1">
-            {pathname !== '/Analytics/Spending' &&
-                <Link href={'/Analytics/Spending'} className={'flex justify-end'}>View Full Analytics</Link>}
+        <Link href={'/Analytics/Spending'}
+              className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 xl:col-span-4 p-4 flex-1">
             <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick}/>
-        </div>
+        </Link>
     );
 };
 

@@ -27,7 +27,7 @@ export const TransactionList: React.FC = () => {
 
     return (
         <div
-            className="overflow-y-auto max-h-[70vh] border-l p-4 col-span-6 xl:col-span-2 hover:shadow-lg flex flex-col gap-4 rounded-lg border border-[#E0E0E0] bg-white">
+            className="overflow-y-auto max-h-[60vh] border-l p-4 col-span-6 xl:col-span-2 hover:shadow-lg flex flex-col gap-4 rounded-lg border border-[#E0E0E0] bg-white">
             <div className="flex items-center mb-4 gap-2">
                 <h2 className="text-xl font-semibold flex gap-2 items-center flex-wrap">
                     {selectedCategory
