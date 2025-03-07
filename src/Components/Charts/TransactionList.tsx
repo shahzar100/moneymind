@@ -12,7 +12,7 @@ export const TransactionList: React.FC = () => {
         let txs = transactions.filter((tx: Transaction) => {
             const cat = (tx.category || "").trim().toLowerCase();
             // Only include transactions that have a date defined and are not income or transfers.
-            return tx.date && cat !== "income" && cat !== "transfers" && !tx.notes.includes("Returned");
+            return tx.date && cat !== "income" && cat !== "transfers";
         });
         if (selectedCategory) {
             txs = txs.filter((tx: Transaction) => (tx.category || "").trim().toLowerCase() === selectedCategory);
@@ -55,7 +55,8 @@ export const TransactionList: React.FC = () => {
                             <div className={'flex flex-col gap-10'}>
                                 <button className={'flex justify-between pr-4 text-xl group'}>
                                     {tx.name}
-                                    <span className="font-medium text-red-500">{tx.amount.toFixed(2)}</span>
+                                    <span
+                                        className={`font-medium  ${tx.amount > 0 ? 'text-green-500' : 'text-red-500'} `}>{tx.amount > 0 && '+'}{tx.amount.toFixed(2)}</span>
                                 </button>
 
                                 <div className={'flex gap-2'}>
