@@ -28,7 +28,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({children}
     // State to store the CSV data.
     const [fullTransactions, setFullTransactions] = useState<Transaction[]>([]);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [selectedDays, setSelectedDays] = useState<number>(7);
+    const [selectedDays, setSelectedDays] = useState<string>("7");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 

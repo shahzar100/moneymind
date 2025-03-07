@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+#days-select:target {
+    outline: 10px solid #007BFF; /* Highlight with a blue border */
+}
