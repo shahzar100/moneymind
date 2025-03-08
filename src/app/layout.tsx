@@ -2,7 +2,8 @@ import type {Metadata} from "next";
 // import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {Providers} from "@/app/Providers";
-import Link from "next/link";
+import {Header} from "@/Components/Header";
+import ClientAuthProvider from "../../backend/Auth/ClientAuthProvider";
 
 // const geistSans = Geist({
 //     variable: "--font-geist-sans",
@@ -26,16 +27,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body className={`antialiased bg-white mx-auto max-w-6xl flex flex-col gap-6 p-2 xl:p-0 xl:pb-4`}>
-        <header className={'flex justify-between pt-4 pb-4'}>
-            <h1> Money Mind </h1>
-            <div>
-                <Link href={'/'}> Features </Link>
-            </div>
-        </header>
-        <Providers>
-            {children}
-        </Providers>
+        <body
+            className={`antialiased bg-white mx-auto max-w-6xl flex flex-col gap-6 p-2 xl:p-0 xl:pb-4`}
+        >
+        <ClientAuthProvider domain={process.env.NEXT_AUTH0_DOMAIN!} clientId={process.env.NEXT_AUTH0_CLIENT_ID!}>
+            <Header/>
+            <Providers>
+                {children}
+            </Providers>
+        </ClientAuthProvider>
         </body>
         </html>
     );

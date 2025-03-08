@@ -9,7 +9,6 @@ type TextLinkProps = {
 
 export const TextLink = ({href, text}: TextLinkProps) => {
     const pathname = usePathname();
-    console.log(pathname)
     const isActive = pathname === href;
 
     return (

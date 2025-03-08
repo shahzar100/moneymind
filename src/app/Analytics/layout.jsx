@@ -23,12 +23,7 @@ export const Layout = ({children}) => {
                         href="/Analytics/Subscriptions"
                         text="Subscriptions"
                     />
-                    <TextLink
-                        href="/Analytics/Groups"
-                        text="Groups"
-                    />
                 </div>
-
                 {children}
             </div>
         </div>

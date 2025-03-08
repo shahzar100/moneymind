@@ -7,7 +7,7 @@ export function Providers({children}: { children: React.ReactNode }) {
     return (
         <DataProvider>
             <HeroUIProvider>
-            {children}
+                {children}
             </HeroUIProvider>
         </DataProvider>
     );
