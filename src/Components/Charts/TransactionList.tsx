@@ -27,13 +27,17 @@ export const TransactionList: React.FC = () => {
 
     return (
         <div
-            className="overflow-y-auto max-h-[60vh] border-l p-4 col-span-3 hover:shadow-lg flex flex-col gap-4 rounded-lg border border-[#E0E0E0] bg-white">
-            <div className="flex items-center mb-4 gap-2">
+            className="overflow-y-auto max-h-[60vh] border-l p-4 col-span-3 xl:col-span-2 hover:shadow-lg flex flex-col gap-4 rounded-lg border border-[#E0E0E0] bg-white">
+            <div className="flex justify-between items-center mb-4 gap-2">
                 <h2 className="text-xl font-semibold flex flex-col xl:flex-row gap-2 items-center flex-wrap">
                     {selectedCategory
                         ? `Transactions for "${selectedCategory}" `
                         : `Transactions`}
-                    <span className={'text-sm'}> (For Last {selectedDays} days  )</span>
+                    <div className={'text-sm'}>
+                        <p> {filteredTransactions.length} transactions for last {selectedDays} days</p>
+                        <p></p>
+                    </div>
+
                 </h2>
 
 
@@ -47,11 +51,10 @@ export const TransactionList: React.FC = () => {
                 )}
             </div>
 
-
             {filteredTransactions.length > 0 ? (
                 <ul className="space-y-4">
                     {filteredTransactions.map((tx: Transaction, idx: number) => (
-                        <li key={idx} className="text-sm border-b pb-2">
+                        <li key={idx} className={`text-sm ${idx < filteredTransactions.length - 1 && 'border-b'} pb-2`}>
                             <div className={'flex flex-col gap-10'}>
                                 <button className={'flex justify-between pr-4 text-xl group'}>
                                     {tx.name}

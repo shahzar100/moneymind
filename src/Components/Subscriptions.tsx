@@ -65,7 +65,7 @@ export const Subscriptions: React.FC = () => {
             <div className="flex flex-col gap-8">
                 {/* Current Subscriptions Section */}
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-2">Current Subscriptions</h3>
+                    <h3 className=" font-semibold mb-2">Current Subscriptions</h3>
                     {currentSubscriptions.length > 0 ? (
                         <ul className="space-y-4">
                             {currentSubscriptions.map((bundle, idx) => (
@@ -86,7 +86,7 @@ export const Subscriptions: React.FC = () => {
 
                 {/* Past Subscriptions Section */}
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-2">Past Subscriptions</h3>
+                    <h3 className=" font-semibold mb-2">Past Subscriptions</h3>
                     {pastSubscriptions.length > 0 ? (
                         <ul className="space-y-4">
                             {pastSubscriptions.map((bundle, idx) => (

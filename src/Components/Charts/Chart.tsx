@@ -124,7 +124,7 @@ export const ChartComponent: React.FC = () => {
     return (
         <Link
             href={'/Analytics/Spending'}
-            className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 p-4 flex-1"
+            className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 xl:col-span-4 p-4 flex-1 flex-grow h-full w-full"
         >
             <Bar
                 ref={chartRef}

@@ -51,7 +51,7 @@ export const SpendingInsights: React.FC = () => {
     }, [transactions, selectedCategory]);
 
     return (
-        <div className="p-4 rounded-lg hover:shadow-lg border border-[#E0E0E0] bg-white  col-span-6">
+        <div className="p-4 rounded-lg hover:shadow-lg border border-[#E0E0E0] bg-white  col-span-6 xl:col-span-3">
             <h2 className="text-xl font-bold mb-2">Spending Insights</h2>
             {loading ? (
                 <p>Loading insights...</p>
