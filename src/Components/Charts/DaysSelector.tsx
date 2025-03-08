@@ -22,13 +22,9 @@ export const DaysSelector: React.FC = () => {
 
     return (
         <div
-            className="flex items-center space-x-3 col-span-6 rounded-lg border border-[#E0E0E0] hover:shadow-lg bg-white p-2 ">
-            <label htmlFor="days-select" className="text-lg font-semibold text-gray-700">
-                Select Period:
-            </label>
-
+            className="flex items-center space-x-3 col-span-2 rounded-lg ">
             <div className={'relative w-40'}>
-                <Button id={"days-select"} className="bg-transparent border-blue-500 border w-full"
+                <Button id={"days-select"} className="bg-transparent border-blue-500 hover:bg-blue-200 border w-full"
                         onPress={() => setSelectionMenu(!selectionMenu)}>
                     {selectedDays} days
                 </Button>

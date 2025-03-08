@@ -23,7 +23,17 @@ export const TotalSpent: React.FC = () => {
         });
     }, [transactions]);
 
-    const total = useMemo(() => {
+    // Compute aggregated breakdown per category.
+    const breakdown = useMemo(() => {
+        const breakdownMap: Record<string, number> = {};
+        filteredTransactions.forEach((tx) => {
+            const cat = (tx.category || "").trim().toLowerCase();
+            breakdownMap[cat] = (breakdownMap[cat] || 0) + tx.amount;
+        });
+        return Object.entries(breakdownMap).sort(([, a], [, b]) => b - a);
+    }, [filteredTransactions]);
+
+    const totalSpent = useMemo(() => {
         return filteredTransactions.reduce((sum, tx) => sum + tx.amount, 0);
     }, [filteredTransactions]);
 
@@ -36,21 +46,11 @@ export const TotalSpent: React.FC = () => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    // Compute aggregated breakdown per category.
-    const breakdown = useMemo(() => {
-        const breakdownMap: Record<string, number> = {};
-        filteredTransactions.forEach((tx) => {
-            const cat = (tx.category || "").trim().toLowerCase();
-            breakdownMap[cat] = (breakdownMap[cat] || 0) + tx.amount;
-        });
-        return Object.entries(breakdownMap).sort(([, a], [, b]) => b - a);
-    }, [filteredTransactions]);
-
     return (
         <div
             className="p-4 rounded-lg border border-[#E0E0E0] hover:shadow-lg bg-white col-span-6 flex items-end flex-wrap justify-evenly">
             <h3 className="text-lg font-semibold">
-                Spending <span className="text-red-500">£{Math.abs(total).toLocaleString()}</span> pounds
+                Spending <span className="text-red-500">£{Math.abs(totalSpent).toLocaleString()}</span> pounds
             </h3>
             <h3 className="text-lg font-semibold">
                 Income <span className="text-green-500">£{totalIncome.toLocaleString()}</span> pounds
@@ -70,10 +70,11 @@ export const TotalSpent: React.FC = () => {
                                 Total Income: <span
                                 className="text-green-500">£{totalIncome.toLocaleString()}</span> pounds
                             </h3>
+
                             {breakdown.map(([category, amt], idx) => (
                                 <li key={idx} className="flex justify-between border-b py-2">
                                     <span className="font-medium">{category}</span>
-                                    <span className="text-red-500">£{amt.toFixed(2)}</span>
+                                    <span className="text-red-500">£{Math.abs(amt).toFixed(2)}</span>
                                 </li>
                             ))}
                         </ul>

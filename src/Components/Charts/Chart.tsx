@@ -13,7 +13,6 @@ import {
     Tooltip,
 } from "chart.js";
 import {Transaction, useDataContext} from "../../../backend/context/DataContext";
-import {usePathname} from "next/navigation";
 import Link from "next/link";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -27,7 +26,6 @@ const getOptions = (selectedDays: number) => ({
 });
 
 export const ChartComponent: React.FC = () => {
-    const pathname = usePathname();
     const {transactions, selectedDays, setSelectedCategory, selectedCategory} = useDataContext();
     const chartRef = useRef<ChartJS<"bar", number[], string>>(null);
 
@@ -124,9 +122,17 @@ export const ChartComponent: React.FC = () => {
     };
 
     return (
-        <Link href={'/Analytics/Spending'}
-              className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 xl:col-span-4 p-4 flex-1">
-            <Bar ref={chartRef} options={getOptions(selectedDays)} data={computedChartData} onClick={handleClick}/>
+        <Link
+            href={'/Analytics/Spending'}
+            className="bg-white rounded-lg border border-[#E0E0E0] hover:shadow-xl col-span-6 p-4 flex-1"
+        >
+            <Bar
+                ref={chartRef}
+                options={getOptions(selectedDays)}
+                data={computedChartData}
+                onClick={handleClick}
+                className="w-full h-full"
+            />
         </Link>
     );
 };

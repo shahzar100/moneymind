@@ -20,7 +20,7 @@ export const Breadcrumbs: React.FC = () => {
     });
 
     return (
-        <div className="p-4">
+        <div className="p-4 col-span-4">
             <ol className="flex items-center space-x-2">
                 {/* Always include Home as the first breadcrumb */}
                 <li>

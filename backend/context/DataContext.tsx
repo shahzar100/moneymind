@@ -10,7 +10,9 @@ export interface Transaction {
     amount: number;
     notes: string;
     category: string;
+    description: string;
 }
+
 
 interface DataContextType {
     fullTransactions: Transaction[];
@@ -28,7 +30,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({children}
     // State to store the CSV data.
     const [fullTransactions, setFullTransactions] = useState<Transaction[]>([]);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [selectedDays, setSelectedDays] = useState<string>("7");
+    const [selectedDays, setSelectedDays] = useState<number>(7);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -50,6 +52,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({children}
                     amount: parseFloat(row["Local amount"]),  // CSV header "Local amount"
                     notes: row["Notes and #tags"] || "",
                     category: row.Category,  // CSV header "Category"
+                    description: row.Description,  // CSV header "Description"
                 }));
                 setFullTransactions(data);
                 const cutoff = new Date();
