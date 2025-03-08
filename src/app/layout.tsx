@@ -27,7 +27,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className={`antialiased bg-white mx-auto max-w-6xl flex flex-col gap-6 p-2 xl:p-0 xl:pb-4`}>
-        <header className={'flex justify-between p-6 shadow-2xl'}>
+        <header className={'flex justify-between pt-4 pb-4'}>
             <h1> Money Mind </h1>
             <div>
                 <Link href={'/'}> Features </Link>

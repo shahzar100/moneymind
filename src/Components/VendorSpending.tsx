@@ -79,7 +79,7 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
 
     return (
         <div
-            className="p-4 border border-[#E0E0E0] hover:shadow-lg rounded-lg bg-white col-span-3 max-h-[60vh] overflow-y-auto flex flex-col gap-4">
+            className="p-4 border border-[#E0E0E0] hover:shadow-lg rounded-lg bg-white col-span-3 xl:col-span-6 max-h-[60vh] overflow-y-auto flex flex-col gap-4">
             <h2 className="text-xl font-bold mb-4 flex flex-wrap items-center gap-2">
                 Vendor Spending
                 <Link href={'#days-select'} className={'text-gray-800 text-sm hover:cursor-pointer'}>

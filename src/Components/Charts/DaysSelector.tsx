@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import {useDataContext} from "../../../backend/context/DataContext";
 import {Button} from "@heroui/react";
+import {UserMenu} from "@/Components/UserMenu";
 
 export const DaysSelector: React.FC = () => {
     const {selectedDays, setSelectedDays} = useDataContext();
@@ -33,6 +34,7 @@ export const DaysSelector: React.FC = () => {
                     <DisplayValues/>
                 </div>
             </div>
+            <UserMenu/>
         </div>
     );
 };
