@@ -20,8 +20,12 @@ export const Layout = ({children}) => {
                         text="Full Analytics"
                     />
                     <TextLink
-                        href="/Analytics/Spending"
+                        href="/Analytics/Subscriptions"
                         text="Subscriptions"
+                    />
+                    <TextLink
+                        href="/Analytics/Groups"
+                        text="Groups"
                     />
                 </div>
 
