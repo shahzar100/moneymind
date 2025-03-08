@@ -2,6 +2,7 @@
 import React from "react";
 import {useDataContext} from "../../backend/context/DataContext";
 import {parseDateFromCSV} from "../../backend/utils/date";
+import {Amount} from "@/Components/Helpful/Amount";
 
 // Helper to check if a date is in the current or previous month.
 function isCurrentSubscription(date: Date): boolean {
@@ -71,10 +72,14 @@ export const Subscriptions: React.FC = () => {
                             {currentSubscriptions.map((bundle, idx) => (
                                 <li key={idx} className="border p-4 rounded">
                                     <div className="font-semibold text-lg">{bundle.name}</div>
-                                    <div>
-                                        Total Spent:{" "}
-                                        <span className="text-red-500">£{bundle.total.toFixed(2)}</span> across{" "}
-                                        {bundle.count} transactions.
+                                    <div className={'flex items-center gap-2'}>
+                                        <span className={'flex items-center gap-2'}>
+                                            Total:
+                                            <Amount amount={bundle.total}/>
+                                        </span>
+                                        <span>
+                                            across {bundle.count} transactions.
+                                        </span>
                                     </div>
                                 </li>
                             ))}

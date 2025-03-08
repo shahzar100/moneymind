@@ -3,6 +3,7 @@ import React, {useMemo} from "react";
 import {Transaction, useDataContext} from "../../../backend/context/DataContext";
 import {parseDateFromCSV} from "../../../backend/utils/date";
 import {FaX} from "react-icons/fa6";
+import {Amount} from "@/Components/Helpful/Amount";
 
 export const TransactionList: React.FC = () => {
     const {transactions, selectedCategory, setSelectedCategory, selectedDays} = useDataContext();
@@ -61,14 +62,7 @@ export const TransactionList: React.FC = () => {
                             <div className="flex flex-col space-y-3">
                                 <div className="flex flex-wrap gap-4 justify-between items-center">
                                     <h3 className="text-lg font-semibold text-gray-800">{tx.name}</h3>
-                                    <span
-                                        className={`text-xl font-medium ${
-                                            tx.amount > 0 ? "text-green-500" : "text-red-500"
-                                        }`}
-                                    >
-                                        {tx.amount > 0 && "+"}
-                                        {Math.abs(tx.amount).toFixed(2)}
-                                    </span>
+                                    <Amount amount={tx.amount}/>
                                 </div>
 
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">

@@ -5,6 +5,7 @@ import {parseDateFromCSV} from "@/../backend/utils/date";
 import Link from "next/link";
 import {Button} from "@heroui/react";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import {Amount} from "@/Components/Helpful/Amount";
 
 interface VendorSpendingProps {
     fullView?: boolean;
@@ -20,7 +21,7 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
     const vendorTransactions = useMemo(() => {
         return dataToUse.filter((tx: Transaction) => {
             const cat = (tx.category || "").trim().toLowerCase();
-            return cat !== "subscriptions" && cat !== "income" && cat !== "transfers" && !tx.notes.includes("Returned");
+            return cat !== "subscriptions" && cat !== "income" && cat !== "transfers";
         });
     }, [dataToUse]);
 
@@ -104,9 +105,8 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
                                     {vendor.name}{" "}
                                     <span className="text-sm text-gray-500">({vendor.category})</span>
                                 </h3>
-                                <p className="text-gray-700">
-                                    Total Spent:{" "}
-                                    <span className="text-red-500">£{Math.abs(vendor.total).toFixed(2)}</span>
+                                <p className="text-gray-700 flex items-center gap-2 flex-wrap">
+                                    Total: <Amount amount={vendor.total}/>
                                 </p>
                                 <p className="text-gray-600">Transactions: {vendor.count}</p>
                             </div>
@@ -134,24 +134,27 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
             {/* Modal for vendor details */}
             {selectedVendor && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
-                        <Button
-                            onPress={() => setSelectedVendor(null)}
-                            className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-2xl"
-                            aria-label="Close modal"
-                        >
-                            &times;
-                        </Button>
-                        <h2 className="text-xl font-bold mb-4">{selectedVendor} Details</h2>
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md flex flex-col gap-4 ">
+                        <div className={'flex justify-between items-start'}>
+                            <h2 className="text-xl font-bold flex-wrap flex">{selectedVendor}</h2>
+                            <Button
+                                onPress={() => setSelectedVendor(null)}
+                                className="text-gray-600 hover:text-gray-800 text-2xl"
+                                aria-label="Close modal"
+                            >
+                                &times;
+                            </Button>
+                        </div>
+
                         {selectedVendorTransactions.length > 0 ? (
                             <ul className="max-h-60 overflow-y-auto">
                                 {selectedVendorTransactions
                                     .map((tx, idx) => (<li key={idx} className="border-b py-2">
                                             <div className="flex justify-between">
-                                            <span className="font-medium">
-                                                {parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}
-                                            </span>
-                                                <span className="text-red-500">£{Math.abs(tx.amount).toFixed(2)}</span>
+                                                <span className="font-medium">
+                                                    {parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}
+                                                </span>
+                                                <Amount amount={tx.amount}/>
                                             </div>
                                             {tx.notes && (
                                                 <div className="text-xs text-gray-600">{tx.notes}</div>
@@ -162,14 +165,6 @@ export const VendorSpending: React.FC<VendorSpendingProps> = ({fullView = true})
                         ) : (
                             <p>No transactions available for this vendor.</p>
                         )}
-                        <div className="mt-4 text-right">
-                            <Button
-                                onPress={() => setSelectedVendor(null)}
-                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
-                            >
-                                Close
-                            </Button>
-                        </div>
                     </div>
                 </div>
             )}
