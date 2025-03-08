@@ -54,36 +54,44 @@ export const TransactionList: React.FC = () => {
             {filteredTransactions.length > 0 ? (
                 <ul className="space-y-4">
                     {filteredTransactions.map((tx: Transaction, idx: number) => (
-                        <li key={idx} className={`text-sm ${idx < filteredTransactions.length - 1 && 'border-b'} pb-2`}>
-                            <div className={'flex flex-col gap-10'}>
-                                <button className={'flex justify-between pr-4 text-xl group'}>
-                                    {tx.name}
+                        <li
+                            key={idx}
+                            className="bg-white shadow rounded-md border p-4 transition transform hover:-translate-y-1 hover:shadow-lg"
+                        >
+                            <div className="flex flex-col space-y-3">
+                                <div className="flex flex-wrap gap-4 justify-between items-center">
+                                    <h3 className="text-lg font-semibold text-gray-800">{tx.name}</h3>
                                     <span
-                                        className={`font-medium  ${tx.amount > 0 ? 'text-green-500' : 'text-red-500'} `}>{tx.amount > 0 && '+'}{Math.abs(tx.amount).toFixed(2)}</span>
-                                </button>
-
-                                <div className={'flex gap-2'}>
-                                    <span className="italic">{tx.category}</span>
-                                    <span className="font-medium">
-                                        {parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}
-                                </span>
+                                        className={`text-xl font-medium ${
+                                            tx.amount > 0 ? "text-green-500" : "text-red-500"
+                                        }`}
+                                    >
+                                        {tx.amount > 0 && "+"}
+                                        {Math.abs(tx.amount).toFixed(2)}
+                                    </span>
                                 </div>
 
-                            </div>
+                                <div className="flex items-center space-x-2 text-sm text-gray-500">
+                                    <span className="italic">{tx.category}</span>
+                                    <span>•</span>
+                                    <span>{parseDateFromCSV(tx.date).toLocaleDateString("en-GB")}</span>
+                                </div>
 
-                            {tx.notes && (
-                                <div className="text-xs text-gray-600">{tx.notes}</div>
-                            )}
+                                {tx.notes && (
+                                    <p className="text-gray-600 text-sm">{tx.notes}</p>
+                                )}
+                            </div>
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p className="text-sm">
+                <p className="text-sm text-center text-gray-500">
                     {selectedCategory
                         ? "No transactions found for this category."
                         : "No transactions found for the selected period."}
                 </p>
             )}
+
         </div>
     );
 };
